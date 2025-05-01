@@ -1,37 +1,50 @@
-let progress = 0;
-let terminalText = document.getElementById("terminalText");
-let progressBar = document.getElementById("progress-bar");
-let statusText = document.getElementById("status");
-
-const terminalMessages = [
-    "Initializing...\n",
-    "Scanning...\n",
-    "Bypassing security...\n",
-    "Decrypting data...\n",
-    "Progress: 1%\n"
-];
-
-function updateTerminal() {
-    if (progress < terminalMessages.length) {
-        terminalText.innerHTML += terminalMessages[progress];
-    }
+body {
+    background-color: #000;
+    color: #0f0;
+    font-family: 'Courier New', Courier, monospace;
+    margin: 0;
+    padding: 0;
 }
 
-function updateProgress() {
-    if (progress < 100) {
-        progress++;
-        progressBar.style.width = progress + "%";
-        if (progress === 100) {
-            statusText.textContent = "Hack Complete.";
-        }
-    }
+.terminal {
+    margin: 50px;
+    padding: 20px;
+    border: 2px solid #0f0;
+    background-color: #111;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
 }
 
-setInterval(function() {
-    updateProgress();
-    updateTerminal();
-}, 100);
+#terminalText {
+    white-space: pre-wrap;
+    word-wrap: break-word;
+}
 
-setTimeout(function() {
-    terminalText.innerHTML += "Drptz | System Override Complete.\n";
-}, 3000);
+.progress-bar-container {
+    margin-top: 20px;
+    width: 100%;
+    background-color: #333;
+    border: 1px solid #0f0;
+}
+
+#progress-bar {
+    width: 1%;
+    height: 30px;
+    background-color: #0f0;
+}
+
+.status {
+    margin-top: 20px;
+    font-size: 14px;
+}
+
+.skull {
+    margin-top: 20px;
+    text-align: center;
+}
+
+.skull img {
+    width: 100px;
+    height: auto;
+}
