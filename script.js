@@ -48,3 +48,37 @@ function generateCalendar() {
 
 // Call the function to generate the calendar when the page loads
 generateCalendar();
+// Terminal typing simulation
+const terminal = document.getElementById("terminalText");
+const status = document.getElementById("status");
+const progressBar = document.getElementById("progress-bar");
+
+let lines = [
+  "Initializing hack protocol...",
+  "Bypassing firewall...",
+  "Accessing secure server...",
+  "Extracting data...",
+  "Upload complete. Logging out..."
+];
+
+let i = 0;
+function typeLine() {
+    if (i < lines.length) {
+        terminal.textContent += lines[i] + "\n";
+        status.textContent = lines[i];
+        i++;
+        setTimeout(typeLine, 1000);
+    }
+}
+typeLine();
+
+// Animate Progress Bar
+let progress = 0;
+function animateProgress() {
+    if (progress <= 100) {
+        progressBar.style.width = progress + "%";
+        progress++;
+        setTimeout(animateProgress, 100);
+    }
+}
+animateProgress();
