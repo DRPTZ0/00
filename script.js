@@ -1,57 +1,50 @@
+// Calendar Code
+function generateCalendar() {
+    let date = new Date();
+    let month = date.getMonth(); // current month
+    let year = date.getFullYear(); // current year
 
-let progress = 0;
-let terminalText = document.getElementById("terminalText");
-let progressBar = document.getElementById("progress-bar");
-let statusText = document.getElementById("status");
+    // Days of the week array
+    const daysOfWeek = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 
-const terminalMessages = [
-    "Initializing system...\n",
-    "Bypassing security protocols...\n",
-    "Decrypting files...\n",
-    "Hacking mainframe...\n",
-    "Unlocking resources...\n",
-    "Running diagnostic tests...\n",
-    "System breach imminent...\n"
-];
+    // Set the first day of the month
+    date.setDate(1);
 
-const randomMessages = [
-    "Scanning network...\n",
-    "Bypassing security firewalls...\n",
-    "Hacking in progress...\n",
-    "Attempting to break through...\n",
-    "Decrypting data...\n"
-];
+    // Get the first day of the month (0 - 6)
+    let firstDay = date.getDay();
 
-function updateTerminal() {
-    if (progress < terminalMessages.length) {
-        terminalText.innerHTML += terminalMessages[progress];
+    // Get the number of days in the month
+    let daysInMonth = new Date(year, month + 1, 0).getDate();
+
+    // Create the calendar HTML structure
+    let calendarHTML = "<h3>" + date.toLocaleString('default', { month: 'long' }) + " " + year + "</h3>";
+    calendarHTML += "<table><thead><tr>";
+
+    // Add days of the week to the header
+    for (let i = 0; i < 7; i++) {
+        calendarHTML += "<th>" + daysOfWeek[i] + "</th>";
     }
-}
+    calendarHTML += "</tr></thead><tbody><tr>";
 
-function updateProgress() {
-    if (progress < 100) {
-        progress++;
-        progressBar.style.width = progress + "%";
-        if (progress === 100) {
-            statusText.textContent = "Hack Complete.";
-            document.getElementById("skull-img").src = "skull-hacked.png"; // Change skull image once hack is complete
+    // Add blank cells for the first row if the month doesn't start on Sunday
+    for (let i = 0; i < firstDay; i++) {
+        calendarHTML += "<td></td>";
+    }
+
+    // Fill in the days of the month
+    for (let day = 1; day <= daysInMonth; day++) {
+        if ((firstDay + day - 1) % 7 === 0 && day !== 1) {
+            calendarHTML += "</tr><tr>";
         }
+        calendarHTML += "<td>" + day + "</td>";
     }
+
+    // Close the calendar table
+    calendarHTML += "</tr></tbody></table>";
+
+    // Display the calendar on the page
+    document.getElementById('calendar').innerHTML = calendarHTML;
 }
 
-function generateRandomMessage() {
-    const randomIndex = Math.floor(Math.random() * randomMessages.length);
-    terminalText.innerHTML += randomMessages[randomIndex];
-}
-
-setInterval(function() {
-    updateProgress();
-    updateTerminal();
-    if (progress % 10 === 0 && progress < 100) {
-        generateRandomMessage();
-    }
-}, 100);
-
-setTimeout(function() {
-    terminalText.innerHTML += "Drptz | System Override Complete.\n";
-}, 4000);
+// Call the function to generate the calendar when the page loads
+generateCalendar();
