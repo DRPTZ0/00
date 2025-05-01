@@ -1,24 +1,25 @@
+
 let progress = 0;
 let terminalText = document.getElementById("terminalText");
 let progressBar = document.getElementById("progress-bar");
 let statusText = document.getElementById("status");
 
 const terminalMessages = [
-    "Initializing...\n",
-    "Bypassing Firewalls...\n",
-    "Decrypting Core...\n",
-    "Connecting to Mainframe...\n",
-    "Progress: 1%\n",
-    "Running Protocols...\n",
-    "Unlocking Key... Please Wait\n"
+    "Initializing system...\n",
+    "Bypassing security protocols...\n",
+    "Decrypting files...\n",
+    "Hacking mainframe...\n",
+    "Unlocking resources...\n",
+    "Running diagnostic tests...\n",
+    "System breach imminent...\n"
 ];
 
 const randomMessages = [
     "Scanning network...\n",
-    "Bypassing security measures...\n",
+    "Bypassing security firewalls...\n",
     "Hacking in progress...\n",
-    "Decryption underway...\n",
-    "Attempting to break through...\n"
+    "Attempting to break through...\n",
+    "Decrypting data...\n"
 ];
 
 function updateTerminal() {
@@ -33,6 +34,7 @@ function updateProgress() {
         progressBar.style.width = progress + "%";
         if (progress === 100) {
             statusText.textContent = "Hack Complete.";
+            document.getElementById("skull-img").src = "skull-hacked.png"; // Change skull image once hack is complete
         }
     }
 }
