@@ -1,37 +1,25 @@
-let progress = 0;
-let terminalText = document.getElementById("terminalText");
-let progressBar = document.getElementById("progress-bar");
-let statusText = document.getElementById("status");
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fake Hack Progress</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="terminal">
+        <pre id="terminalText"></pre>
+        <div class="progress-bar-container">
+            <div id="progress-bar"></div>
+        </div>
+        <div class="status">
+            <p>Drptz. | Status: <span id="status">Loading...</span></p>
+        </div>
+        <div class="skull">
+            <img src="https://www.w3schools.com/w3images/skull.png" alt="Skull">
+        </div>
+    </div>
 
-const terminalMessages = [
-    "Initializing...\n",
-    "Scanning...\n",
-    "Bypassing security...\n",
-    "Decrypting data...\n",
-    "Progress: 1%\n"
-];
-
-function updateTerminal() {
-    if (progress < terminalMessages.length) {
-        terminalText.innerHTML += terminalMessages[progress];
-    }
-}
-
-function updateProgress() {
-    if (progress < 100) {
-        progress++;
-        progressBar.style.width = progress + "%";
-        if (progress === 100) {
-            statusText.textContent = "Hack Complete.";
-        }
-    }
-}
-
-setInterval(function() {
-    updateProgress();
-    updateTerminal();
-}, 100);
-
-setTimeout(function() {
-    terminalText.innerHTML += "Drptz | System Override Complete.\n";
-}, 3000);
+    <script src="script.js"></script>
+</body>
+</html>
