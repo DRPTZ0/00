@@ -64,6 +64,8 @@
     <div id="calendar"></div>
   </div>
 
+  <audio id="typeSound" src="https://www.soundjay.com/button/sounds/button-16.mp3" preload="auto"></audio>
+
   <script>
     const lines = [
       "DRPTZ Protocol Booting...",
@@ -76,21 +78,31 @@
       "Terminal Ready."
     ];
     const output = document.getElementById("output");
-    let index = 0;
+    const typeSound = document.getElementById("typeSound");
 
-    function typeLine() {
-      if (index < lines.length) {
-        const line = document.createElement("div");
-        line.textContent = lines[index];
-        output.appendChild(line);
-        index++;
-        setTimeout(typeLine, 800);
+    let i = 0;
+
+    function typeLine(lineIndex = 0, charIndex = 0, lineElem = null) {
+      if (lineIndex >= lines.length) return;
+
+      if (!lineElem) {
+        lineElem = document.createElement("div");
+        output.appendChild(lineElem);
+      }
+
+      if (charIndex < lines[lineIndex].length) {
+        lineElem.textContent += lines[lineIndex][charIndex];
+        typeSound.currentTime = 0;
+        typeSound.play();
+        setTimeout(() => typeLine(lineIndex, charIndex + 1, lineElem), 50);
+      } else {
+        setTimeout(() => typeLine(lineIndex + 1, 0, null), 400);
       }
     }
 
     typeLine();
 
-    // Progress bar animation
+    // Progress bar
     let percent = 0;
     const fill = document.getElementById("progressFill");
     const text = document.getElementById("progressText");
