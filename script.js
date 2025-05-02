@@ -162,3 +162,11 @@
     </script>
 </body>
 </html>
+function updateDateTime() {
+  const now = new Date();
+  const time = now.toLocaleTimeString();
+  const date = now.toLocaleDateString();
+  document.getElementById("datetime").textContent = `${date} | ${time}`;
+}
+setInterval(updateDateTime, 1000);
+updateDateTime();
