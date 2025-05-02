@@ -170,3 +170,10 @@ function updateDateTime() {
 }
 setInterval(updateDateTime, 1000);
 updateDateTime();
+#datetime {
+  text-align: center;
+  font-size: 1.2em;
+  color: #0f0;
+  margin-top: 10px;
+  text-shadow: 0 0 5px #0f0;
+}
