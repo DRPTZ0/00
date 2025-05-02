@@ -1,195 +1,116 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>DRPTZ // Ghost Interface</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>DRPTZ Terminal</title>
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
     body {
-      background-color: #000;
-      color: #0f0;
-      font-family: 'Courier New', Courier, monospace;
-      height: 100vh;
+      margin: 0;
+      background: black;
+      color: #00ff00;
+      font-family: monospace;
       overflow: hidden;
     }
-    .container {
-      width: 100%;
-      height: 100%;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      overflow: auto;
+    .terminal {
       padding: 20px;
-    }
-    .header h1 {
-      font-size: 32px;
-      margin-bottom: 20px;
-      text-align: center;
+      white-space: pre-wrap;
     }
     .symbol {
-      font-size: 60px;
-      animation: pulse 1.5s infinite alternate;
-      margin-bottom: 20px;
+      font-size: 30px;
+      color: red;
+      text-align: center;
+      animation: pulse 1.2s infinite alternate;
     }
     @keyframes pulse {
       from { transform: scale(1); }
       to { transform: scale(1.2); }
     }
-    .terminal {
-      background-color: #111;
-      padding: 20px;
-      width: 600px;
-      border: 2px solid #0f0;
-      margin-bottom: 20px;
-      max-height: 250px;
-      overflow-y: auto;
-    }
-    #terminalText {
-      white-space: pre-wrap;
-      word-wrap: break-word;
-      font-size: 16px;
-    }
-    .progress-bar-container {
-      width: 600px;
+    #progressBar {
+      width: 100%;
       background-color: #222;
-      border: 1px solid #0f0;
-      height: 30px;
-      margin-bottom: 20px;
+      border: 1px solid #00ff00;
+      margin-top: 20px;
+      position: relative;
+      height: 25px;
     }
-    #progress-bar {
-      width: 0;
+    #progressFill {
+      background-color: #00ff00;
       height: 100%;
-      background-color: #0f0;
-      transition: width 0.3s ease;
+      width: 0;
+      transition: width 0.2s ease;
     }
-    #status {
-      font-size: 14px;
-      margin-bottom: 10px;
+    #progressText {
+      position: absolute;
+      width: 100%;
+      text-align: center;
+      top: 0;
+      line-height: 25px;
     }
     #calendar {
-      width: 320px;
-      background-color: #222;
-      padding: 15px;
-      border-radius: 10px;
-      border: 1px solid #0f0;
-      color: #fff;
-    }
-    #calendar h3 {
-      text-align: center;
-      margin-bottom: 10px;
-    }
-    #calendar table {
-      width: 100%;
-      border-collapse: collapse;
-      text-align: center;
-    }
-    #calendar th, #calendar td {
-      border: 1px solid #0f0;
-      padding: 6px;
-    }
-    #calendar td {
-      background-color: #333;
+      color: #aaa;
+      margin-top: 30px;
     }
   </style>
 </head>
 <body>
-  <div class="container">
-    <div class="header">
-      <h1>DRPTZ // Ghost Interface</h1>
-    </div>
-
+  <div class="terminal" id="terminal">
     <div class="symbol">#</div>
-
-    <div id="status">Booting...</div>
-
-    <div class="progress-bar-container">
-      <div id="progress-bar"></div>
+    <div id="output"></div>
+    <div id="progressBar">
+      <div id="progressFill"></div>
+      <div id="progressText"></div>
     </div>
-
-    <div class="terminal">
-      <div id="terminalText"></div>
-    </div>
-
     <div id="calendar"></div>
   </div>
 
   <script>
-    // Terminal simulation
-    const terminal = document.getElementById("terminalText");
-    const status = document.getElementById("status");
-    const progressBar = document.getElementById("progress-bar");
-
-    let lines = [
-      "Initializing hack protocol...",
-      "Bypassing firewall...",
-      "Accessing secure server...",
-      "Extracting data...",
-      "Upload complete. Logging out..."
+    const lines = [
+      "DRPTZ Protocol Booting...",
+      "Establishing secure shell...",
+      "Authenticating...",
+      "Access Granted.",
+      "System Breach Initiated.",
+      "Injecting Payload...",
+      "Monitoring Node DRPTZ...",
+      "Terminal Ready."
     ];
+    const output = document.getElementById("output");
+    let index = 0;
 
-    let i = 0;
     function typeLine() {
-      if (i < lines.length) {
-        terminal.textContent += lines[i] + "\n";
-        status.textContent = lines[i];
-        i++;
-        setTimeout(typeLine, 1000);
+      if (index < lines.length) {
+        const line = document.createElement("div");
+        line.textContent = lines[index];
+        output.appendChild(line);
+        index++;
+        setTimeout(typeLine, 800);
       }
     }
+
     typeLine();
 
-    // Animate progress
-    let progress = 0;
-    function animateProgress() {
-      if (progress <= 100) {
-        progressBar.style.width = progress + "%";
-        progress++;
-        setTimeout(animateProgress, 50);
+    // Progress bar animation
+    let percent = 0;
+    const fill = document.getElementById("progressFill");
+    const text = document.getElementById("progressText");
+
+    const interval = setInterval(() => {
+      if (percent >= 100) {
+        clearInterval(interval);
+        text.textContent = "COMPLETE";
+      } else {
+        percent++;
+        fill.style.width = percent + "%";
+        text.textContent = percent + "%";
       }
-    }
-    animateProgress();
+    }, 100);
 
-    // Calendar generator
-    function generateCalendar() {
-      const now = new Date();
-      const year = now.getFullYear();
-      const month = now.getMonth();
-      const today = now.getDate();
-
-      const firstDay = new Date(year, month, 1).getDay();
-      const daysInMonth = new Date(year, month + 1, 0).getDate();
-
-      const daysOfWeek = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
-      let calendarHTML = "<h3>" + now.toLocaleString('default', { month: 'long' }) + " " + year + "</h3>";
-      calendarHTML += "<table><thead><tr>";
-
-      daysOfWeek.forEach(day => {
-        calendarHTML += "<th>" + day + "</th>";
-      });
-
-      calendarHTML += "</tr></thead><tbody><tr>";
-
-      for (let i = 0; i < firstDay; i++) {
-        calendarHTML += "<td></td>";
-      }
-
-      for (let day = 1; day <= daysInMonth; day++) {
-        const currentDay = new Date(year, month, day).getDay();
-        const highlight = (day === today) ? " style='background-color:#0f0; color:#000;'" : "";
-        calendarHTML += `<td${highlight}>${day}</td>`;
-        if (currentDay === 6 && day !== daysInMonth) calendarHTML += "</tr><tr>";
-      }
-
-      calendarHTML += "</tr></tbody></table>";
-      document.getElementById("calendar").innerHTML = calendarHTML;
-    }
-
-    generateCalendar();
+    // Calendar
+    const cal = document.getElementById("calendar");
+    const today = new Date();
+    const dateStr = today.toDateString();
+    cal.textContent = "Today is: " + dateStr;
   </script>
 </body>
 </html>
