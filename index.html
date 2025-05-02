@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hacking Simulation</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #111;
+            color: #00FF00;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+        }
+
+        #output {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            font-size: 24px;
+            font-family: monospace;
+        }
+
+        #progressBar {
+            position: absolute;
+            bottom: 50px;
+            left: 20px;
+            width: 80%;
+            height: 25px;
+            border: 2px solid #00FF00;
+            background-color: #222;
+        }
+
+        #progressBarFilled {
+            height: 100%;
+            width: 0%;
+            background-color: #00FF00;
+        }
+
+        #quote, #salutation {
+            position: absolute;
+            bottom: 20px;
+            left: 20px;
+            font-size: 18px;
+            font-family: 'Courier New', monospace;
+        }
+
+        .blinking-cursor {
+            font-weight: bold;
+            color: #00FF00;
+            animation: blink 0.75s step-end infinite;
+        }
+
+        @keyframes blink {
+            50% {
+                opacity: 0;
+            }
+        }
+
+    </style>
+</head>
+<body>
+    <div id="output"></div>
+    <div id="progressBar">
+        <div id="progressBarFilled"></div>
+    </div>
+    <div id="quote"></div>
+    <div id="salutation"></div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const outputElement = document.getElementById('output');
+            const progressBarFilled = document.getElementById('progressBarFilled');
+            const quoteElement = document.getElementById('quote');
+            const salutationElement = document.getElementById('salutation');
+            
+            let progress = 0;
+            
+            // لیست آیات قرآن برای نمایش تصادفی
+            const quranVerses = [
+                "بِسْمِ اللَّهِ الرَّحْمَنِ الرَّحِيمِ",
+                "إِنَّ مَعَ الْعُسْرِ يُسْرًا",
+                "قُلْ هُوَ اللَّهُ أَحَدٌ",
+                "الْحَمْدُ لِلَّهِ رَبِّ الْعَالَمِينَ",
+                "إِنَّ اللَّهَ مَعَ الصَّابِرِينَ"
+            ];
+
+            const salutationMessage = "صلوات بر پیامبر و اهل بیتش";
+
+            // Function to simulate the hacking progress
+            function simulateHacking() {
+                let interval = setInterval(() => {
+                    progress += 1;
+                    progressBarFilled.style.width = `${progress}%`;
+                    outputElement.textContent = `Hacking in progress... ${progress}% completed`;
+
+                    if (progress === 100) {
+                        clearInterval(interval);
+                        setTimeout(showQuote, 2000);
+                    }
+                }, 100);
+            }
+
+            // Function to show a random Quranic quote
+            function showQuote() {
+                outputElement.textContent = "";
+                const randomIndex = Math.floor(Math.random() * quranVerses.length);
+                const randomQuote = quranVerses[randomIndex];
+                quoteElement.textContent = randomQuote;
+                setTimeout(showSalutation, 5000);
+            }
+
+            // Function to show the salutation after the quote
+            function showSalutation() {
+                salutationElement.textContent = salutationMessage;
+            }
+
+            // Start the simulation
+            simulateHacking();
+        });
+    </script>
+</body>
+</html>
