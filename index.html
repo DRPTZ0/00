@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dance Animation</title>
+    <style>
+        body {
+            margin: 0;
+            overflow: hidden;
+            background-color: #111;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .container {
+            position: relative;
+            text-align: center;
+        }
+
+        .dancing-person {
+            width: 250px;
+            height: auto;
+            animation: danceAnimation 1s infinite;
+        }
+
+        @keyframes danceAnimation {
+            0% { transform: rotate(0deg); }
+            50% { transform: rotate(10deg); }
+            100% { transform: rotate(0deg); }
+        }
+
+        .overlay-text {
+            position: absolute;
+            top: -50px;
+            width: 100%;
+            font-size: 3rem;
+            color: #FF0000;
+            font-weight: bold;
+            text-shadow: 2px 2px 5px #000;
+        }
+
+        .date-time {
+            position: absolute;
+            bottom: -40px;
+            width: 100%;
+            font-size: 1.5rem;
+            color: #00FF00;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <!-- Dancing Person Animation -->
+        <img src="https://media.giphy.com/media/3o6Zt0ShA1TldfFumY/giphy.gif" alt="Dancing Human" class="dancing-person">
+        
+        <!-- Overlay Text (e.g., DRPTZ) -->
+        <div class="overlay-text">DRPTZ</div>
+        
+        <!-- Date and Time -->
+        <div class="date-time" id="date-time"></div>
+    </div>
+
+    <script>
+        // Display the current date and time
+        function updateDateTime() {
+            var now = new Date();
+            var hours = now.getHours().toString().padStart(2, '0');
+            var minutes = now.getMinutes().toString().padStart(2, '0');
+            var seconds = now.getSeconds().toString().padStart(2, '0');
+            var date = now.toDateString();
+            document.getElementById('date-time').innerHTML = date + ' ' + hours + ':' + minutes + ':' + seconds;
+        }
+
+        // Update every second
+        setInterval(updateDateTime, 1000);
+    </script>
+
+</body>
+</html>
