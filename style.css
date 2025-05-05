@@ -1,104 +1,147 @@
-body {
-    background-color: #000;
-    color: #00FF00;
-    font-family: 'Courier New', monospace;
-    margin: 0;
-    padding: 0;
-    overflow: hidden;
-    height: 100vh;
-}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DRPETO - Pixel Dance & Lights</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: black;
+            overflow: hidden;
+            color: white;
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            position: relative;
+            animation: backgroundLights 1s infinite alternate;
+        }
 
-.message {
-    position: absolute;
-    font-size: 16px;
-    font-weight: bold;
-    animation: blink 1.5s linear infinite, moveMessage 5s ease-in-out infinite;
-    color: #00FF00;
-    text-shadow: 0 0 10px #00FF00, 0 0 20px #00FF00;
-    pointer-events: none;
-}
+        /* Flashing Lights */
+        @keyframes backgroundLights {
+            0% { background-color: #ff007f; }
+            25% { background-color: #00ff7f; }
+            50% { background-color: #0000ff; }
+            75% { background-color: #ff0000; }
+            100% { background-color: #7f00ff; }
+        }
 
-@keyframes blink {
-    50% {
-        opacity: 0;
-    }
-}
+        /* Container and Border Animation */
+        .container {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border: 10px solid #ffffff;
+            padding: 20px;
+            box-sizing: border-box;
+            animation: borderAnimation 2s infinite alternate;
+        }
 
-@keyframes moveMessage {
-    0% {
-        transform: translate(0, 0);
-    }
-    50% {
-        transform: translate(100px, 100px);
-    }
-    100% {
-        transform: translate(0, 0);
-    }
-}
+        @keyframes borderAnimation {
+            0% { border-color: #ff0000; }
+            50% { border-color: #00ff00; }
+            100% { border-color: #0000ff; }
+        }
 
-.shapes {
-    position: absolute;
-    animation: moveShapes 5s linear infinite;
-}
+        /* Name - DRPETO */
+        .name {
+            position: absolute;
+            top: 10px;
+            font-size: 40px;
+            font-weight: bold;
+            text-align: center;
+            color: red;
+            text-shadow: 0 0 10px rgba(255, 0, 0, 0.8), 0 0 20px rgba(255, 0, 0, 0.8);
+            animation: nameGlow 1s infinite alternate;
+        }
 
-@keyframes moveShapes {
-    0% {
-        transform: translate(0, 0);
-    }
-    50% {
-        transform: translate(100px, 100px);
-    }
-    100% {
-        transform: translate(0, 0);
-    }
-}
+        @keyframes nameGlow {
+            0% { text-shadow: 0 0 10px rgba(255, 0, 0, 0.8), 0 0 20px rgba(255, 0, 0, 0.8); }
+            50% { text-shadow: 0 0 10px rgba(0, 255, 0, 0.8), 0 0 20px rgba(0, 255, 0, 0.8); }
+            100% { text-shadow: 0 0 10px rgba(0, 0, 255, 0.8), 0 0 20px rgba(0, 0, 255, 0.8); }
+        }
 
-.circle {
-    width: 25px;
-    height: 25px;
-    border-radius: 50%;
-    background-color: #00FF00;
-    position: absolute;
-    animation: moveShape 5s linear infinite;
-    box-shadow: 0 0 10px #00FF00, 0 0 20px #00FF00;
-}
+        /* Dancing Cat Animation */
+        .cat {
+            position: absolute;
+            bottom: 30px;
+            animation: dance 1s infinite;
+            z-index: 1;
+            width: 150px;
+        }
 
-.square {
-    width: 25px;
-    height: 25px;
-    background-color: #00FF00;
-    position: absolute;
-    animation: moveShape 5s linear infinite;
-    box-shadow: 0 0 10px #00FF00, 0 0 20px #00FF00;
-}
+        @keyframes dance {
+            0% { transform: rotate(0deg); }
+            25% { transform: rotate(15deg); }
+            50% { transform: rotate(0deg); }
+            75% { transform: rotate(-15deg); }
+            100% { transform: rotate(0deg); }
+        }
 
-.triangle {
-    width: 0;
-    height: 0;
-    border-left: 12px solid transparent;
-    border-right: 12px solid transparent;
-    border-bottom: 20px solid #00FF00;
-    position: absolute;
-    animation: moveShape 5s linear infinite;
-    box-shadow: 0 0 10px #00FF00, 0 0 20px #00FF00;
-}
+        /* Clock Display */
+        .clock {
+            position: absolute;
+            top: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 24px;
+            color: #fff;
+            font-weight: bold;
+            z-index: 2;
+            animation: clockAnimation 1s infinite;
+        }
 
-.message-area {
-    position: absolute;
-    top: 10px;
-    left: 10px;
-    width: 100%;
-    height: 100%;
-}
+        @keyframes clockAnimation {
+            0% { opacity: 0.5; }
+            100% { opacity: 1; }
+        }
 
-@keyframes moveShape {
-    0% {
-        transform: translate(0, 0);
-    }
-    50% {
-        transform: translate(80px, 80px);
-    }
-    100% {
-        transform: translate(0, 0);
-    }
-}
+        /* Music Player Embed */
+        .music-player {
+            position: absolute;
+            bottom: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 300px;
+            height: 80px;
+            z-index: 2;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Displaying DRPETO Name -->
+        <div class="name">DRPETO</div>
+
+        <!-- Displaying the Dancing Cat -->
+        <img class="cat" src="https://vignette.wikia.nocookie.net/roblox/images/f/fd/Cat_2.gif/revision/latest/scale-to-width-down/350?cb=20170304105045" alt="Dancing Cat">
+
+        <!-- Clock Display -->
+        <div class="clock" id="clock"></div>
+
+        <!-- Music Player Embed (using your Spotify link) -->
+        <iframe class="music-player" src="https://open.spotify.com/embed/track/6Y975MrXSsIJaXyvPSKdsQ?si=9irhznQkR1ezoG9mWIPaig" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+    </div>
+
+    <script>
+        // Clock Script
+        function updateClock() {
+            var now = new Date();
+            var hours = now.getHours().toString().padStart(2, '0');
+            var minutes = now.getMinutes().toString().padStart(2, '0');
+            var seconds = now.getSeconds().toString().padStart(2, '0');
+            document.getElementById('clock').innerHTML = `${hours}:${minutes}:${seconds}`;
+        }
+        setInterval(updateClock, 1000);
+
+        // Call updateClock initially to show the clock immediately
+        updateClock();
+    </script>
+</body>
+</html>
