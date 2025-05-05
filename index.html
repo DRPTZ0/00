@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>DRPTZ Cyber Dance</title>
+  <style>
+    body {
+      margin: 0;
+      background-color: black;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    .dancer {
+      width: 60px;
+      height: 140px;
+      position: relative;
+      animation: bounce 1s infinite alternate;
+    }
+
+    .head, .body, .arm-left, .arm-right, .leg-left, .leg-right {
+      background-color: lime;
+      position: absolute;
+      border-radius: 10px;
+    }
+
+    .head {
+      width: 40px;
+      height: 40px;
+      top: 0;
+      left: 10px;
+    }
+
+    .body {
+      width: 20px;
+      height: 50px;
+      top: 40px;
+      left: 20px;
+    }
+
+    .arm-left, .arm-right {
+      width: 10px;
+      height: 40px;
+      top: 40px;
+    }
+
+    .arm-left {
+      left: 0;
+      transform-origin: top right;
+      animation: armMove 1s infinite alternate;
+    }
+
+    .arm-right {
+      right: 0;
+      transform-origin: top left;
+      animation: armMoveReverse 1s infinite alternate;
+    }
+
+    .leg-left, .leg-right {
+      width: 10px;
+      height: 40px;
+      bottom: 0;
+      top: 90px;
+    }
+
+    .leg-left {
+      left: 10px;
+      animation: legMove 1s infinite alternate;
+    }
+
+    .leg-right {
+      right: 10px;
+      animation: legMoveReverse 1s infinite alternate;
+    }
+
+    @keyframes bounce {
+      0% { transform: translateY(0); }
+      100% { transform: translateY(-20px); }
+    }
+
+    @keyframes armMove {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(30deg); }
+    }
+
+    @keyframes armMoveReverse {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(-30deg); }
+    }
+
+    @keyframes legMove {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(20deg); }
+    }
+
+    @keyframes legMoveReverse {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(-20deg); }
+    }
+  </style>
+</head>
+<body>
+  <div class="dancer">
+    <div class="head"></div>
+    <div class="body"></div>
+    <div class="arm-left"></div>
+    <div class="arm-right"></div>
+    <div class="leg-left"></div>
+    <div class="leg-right"></div>
+  </div>
+</body>
+</html>
